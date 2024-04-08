@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: cards-challenge
+  datasource:
+    driverClassName: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: 123
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: none
+
+feign:
+  okhttp:
+    enabled: true
