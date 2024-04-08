@@ -1,4 +1,4 @@
-package com.klab.cards.challenge.presentation.entity;
+package com.klab.cards.challenge.presentation.entity.base;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

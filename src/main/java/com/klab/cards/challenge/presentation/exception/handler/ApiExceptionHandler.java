@@ -1,9 +1,9 @@
 package com.klab.cards.challenge.presentation.exception.handler;
 
-import com.automated.restaurant.automatedRestaurant.presentation.exceptions.base.BadRequestException;
-import com.automated.restaurant.automatedRestaurant.presentation.exceptions.base.ConflictException;
-import com.automated.restaurant.automatedRestaurant.presentation.exceptions.base.NotFoundException;
-import com.automated.restaurant.automatedRestaurant.presentation.exceptions.base.UnauthorizedException;
+import com.klab.cards.challenge.presentation.exception.base.BadRequestException;
+import com.klab.cards.challenge.presentation.exception.base.ConflictException;
+import com.klab.cards.challenge.presentation.exception.base.NotFoundException;
+import com.klab.cards.challenge.presentation.exception.base.UnauthorizedException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
