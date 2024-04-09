@@ -17,3 +17,13 @@ spring:
 feign:
   okhttp:
     enabled: true
+
+ehcache:
+  playersCache:
+    cacheName: "playersCache"
+    heapEntries: 1
+    timeToLiveInSeconds: 0 # "forever"
+  cardCache:
+    cacheName: "cardCache"
+    heapEntries: 26
+    timeToLiveInSeconds: 0 # "forever"

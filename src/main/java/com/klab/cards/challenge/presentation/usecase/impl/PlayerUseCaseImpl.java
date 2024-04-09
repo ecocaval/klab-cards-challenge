@@ -6,6 +6,7 @@ import com.klab.cards.challenge.presentation.exception.base.NotFoundException;
 import com.klab.cards.challenge.presentation.repository.PlayerRepository;
 import com.klab.cards.challenge.presentation.usecase.PlayerUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class PlayerUseCaseImpl implements PlayerUseCase {
     }
 
     @Override
+    @Cacheable(value = "playersCache", cacheResolver = "playersCacheResolver")
     public List<Player> findAll() {
 
         List<Player> players = this.playerRepository.findAll();

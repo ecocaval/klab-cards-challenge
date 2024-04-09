@@ -18,7 +18,7 @@ public class GameController {
         this.gameUseCase = gameUseCase;
     }
 
-    @PostMapping
+    @PostMapping("/new")
     public ResponseEntity<GameResponse> createGame() {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
