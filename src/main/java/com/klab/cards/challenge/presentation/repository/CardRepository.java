@@ -12,6 +12,6 @@ import java.util.UUID;
 @Repository
 public interface CardRepository extends JpaRepository<Card, UUID> {
 
-    Optional<Card> findByRank(String rank);
+    Optional<Card> findByDeckOfCardsRank(String deckOfCardsRank);
 
 }

@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -34,4 +35,15 @@ public class Hand extends BaseEntity {
 
     @Column(nullable = false)
     private Integer score;
+
+    public Hand(Player player, Game game) {
+        this.player = player;
+        this.game = game;
+        this.cards = new ArrayList<>();
+        this.score = 0;
+    }
+
+    public void incrementScore(int increment) {
+        this.score = this.score + increment;
+    }
 }

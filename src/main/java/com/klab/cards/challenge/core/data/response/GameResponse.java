@@ -1,6 +1,8 @@
 package com.klab.cards.challenge.core.data.response;
 
+import com.klab.cards.challenge.core.data.dto.WinnerDto;
 import com.klab.cards.challenge.presentation.entity.Game;
+import com.klab.cards.challenge.presentation.entity.Hand;
 import com.klab.cards.challenge.presentation.entity.Player;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,8 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -21,28 +23,29 @@ public class GameResponse {
 
     private LocalDateTime creationDate;
 
-    private LocalDateTime lastModifiedDate;
-
-    private List<PlayerResponse> players;
-
-    private List<PlayerResponse> winners;
+    private List<WinnerDto> winners;
 
     private List<HandResponse> hands;
 
     public static GameResponse fromGame(Game game) {
+
+        Map<Player, Integer> playerScores = game.getHands() != null ?
+                game.getHands().stream().collect(Collectors.toMap(Hand::getPlayer, Hand::getScore)) :
+                Collections.emptyMap();
+
         return GameResponse.builder()
                 .id(game.getId())
                 .creationDate(game.getCreationDate())
-                .lastModifiedDate(game.getLastModifiedDate())
-                .players(game.getPlayers() != null ?
-                        game.getPlayers().stream().map(PlayerResponse::fromPlayer).toList() : List.of()
-                )
-                .winners(game.getWinners() != null ?
-                        game.getWinners().stream().map(PlayerResponse::fromPlayer).toList() : List.of()
-                )
-                .hands(game.getHands() != null ?
-                        game.getHands().stream().map(HandResponse::fromHand).toList() : List.of()
-                )
+                .winners(Optional.ofNullable(game.getWinners())
+                        .orElse(Collections.emptySet())
+                        .stream()
+                        .map(winner -> WinnerDto.fromPlayerAndScore(winner, playerScores.getOrDefault(winner, 0)))
+                        .toList())
+                .hands(Optional.ofNullable(game.getHands())
+                        .orElse(Collections.emptySet())
+                        .stream()
+                        .map(HandResponse::fromHand)
+                        .toList())
                 .build();
     }
 }

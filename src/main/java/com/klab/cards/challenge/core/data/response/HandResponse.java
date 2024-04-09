@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-import java.util.UUID;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -15,22 +14,19 @@ import java.util.UUID;
 @Data
 public class HandResponse {
 
-    private UUID id;
-
-    private UUID playerId;
-
-    private UUID gameId;
+    private PlayerResponse player;
 
     private List<CardResponse> cards;
 
+    private int score;
+
     public static HandResponse fromHand(Hand hand) {
         return HandResponse.builder()
-                .id(hand.getId())
-                .playerId(hand.getPlayer().getId())
-                .gameId(hand.getGame().getId())
+                .player(PlayerResponse.fromPlayer(hand.getPlayer()))
                 .cards(hand.getCards() != null ?
                         hand.getCards().stream().map(CardResponse::fromCard).toList() : List.of()
                 )
+                .score(hand.getScore())
                 .build();
     }
 }

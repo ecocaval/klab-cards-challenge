@@ -17,6 +17,9 @@ public class Card extends BaseEntity {
     @Column(nullable = false, unique = true, length = 2)
     private String rank;
 
+    @Column(nullable = false, unique = true, length = 10)
+    private String deckOfCardsRank;
+
     @Column(nullable = false)
     private int value;
 }
