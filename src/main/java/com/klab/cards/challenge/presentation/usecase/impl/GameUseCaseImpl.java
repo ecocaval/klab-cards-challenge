@@ -5,6 +5,7 @@ import com.klab.cards.challenge.presentation.entity.Card;
 import com.klab.cards.challenge.presentation.entity.Game;
 import com.klab.cards.challenge.presentation.entity.Hand;
 import com.klab.cards.challenge.presentation.entity.Player;
+import com.klab.cards.challenge.presentation.exception.GameNotFoundException;
 import com.klab.cards.challenge.presentation.repository.GameRepository;
 import com.klab.cards.challenge.presentation.usecase.CardUseCase;
 import com.klab.cards.challenge.presentation.usecase.GameUseCase;
@@ -13,10 +14,13 @@ import com.klab.cards.challenge.presentation.usecase.PlayerUseCase;
 import feign.FeignException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.stream.IntStream;
@@ -50,6 +54,22 @@ public class GameUseCaseImpl implements GameUseCase {
     }
 
     @Override
+    public Page<Game> findAllPageable(Pageable pageable) {
+        return this.gameRepository.findAllByOrderByCreationDateDesc(pageable);
+    }
+
+    @Override
+    public Page<Game> findAllGamesWonByPlayerPageable(Player player, Pageable pageable) {
+        return this.gameRepository.findAllByWinnersContainingOrderByCreationDateDesc(player, pageable);
+    }
+
+    @Override
+    public Game findById(String gameId) {
+        return this.gameRepository.findById(UUID.fromString(gameId))
+                .orElseThrow(() -> new GameNotFoundException(gameId));
+    }
+
+    @Override
     @Transactional
     public Game create() {
 
@@ -68,7 +88,7 @@ public class GameUseCaseImpl implements GameUseCase {
 
         Game newGame = new Game();
 
-        newGame.setPlayers(new HashSet<>(this.playerUseCase.findAll().subList(0, Game.MAXIMUM_NUMBER_OF_PLAYERS)));
+        newGame.setPlayers(new HashSet<>(this.playerUseCase.findAll()));
 
         return newGame;
     }
@@ -82,6 +102,7 @@ public class GameUseCaseImpl implements GameUseCase {
             return deckId;
 
         } catch (FeignException exception) {
+            //FIXME
             throw new RuntimeException();
         }
     }
@@ -110,6 +131,7 @@ public class GameUseCaseImpl implements GameUseCase {
                     playerHand.incrementScore(card.getValue());
 
                 } catch (InterruptedException | ExecutionException e) {
+                    //FIXME
                     throw new RuntimeException(e);
                 }
             });
@@ -121,13 +143,14 @@ public class GameUseCaseImpl implements GameUseCase {
 
     private List<CompletableFuture<Card>> drawCardsForPlayer(String deckId) {
 
-        return IntStream.range(0, Game.MAXIMUM_NUMBER_OF_CARD_PER_PLAYER)
+        return IntStream.range(0, Game.MAXIMUM_NUMBER_OF_CARDS_PER_PLAYER)
                 .mapToObj(i -> CompletableFuture.supplyAsync(() -> {
                     try {
                         return this.cardUseCase.findByDeckOfCardsRank(
                                 this.deckOfCardsApiClient.drawACardFromTheDeck(deckId).getDeckOfCardsRank()
                         );
                     } catch (FeignException exception) {
+                        //FIXME
                         throw new RuntimeException();
                     }
                 })).toList();

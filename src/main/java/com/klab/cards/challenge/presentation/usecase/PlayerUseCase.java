@@ -7,4 +7,6 @@ import java.util.List;
 public interface PlayerUseCase {
 
     List<Player> findAll();
+
+    Player findById(String id);
 }
