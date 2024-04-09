@@ -18,6 +18,6 @@ public class CardsCacheWarmUp {
 
     @EventListener(ApplicationReadyEvent.class)
     public void warmUpCaches() {
-        this.cardUseCase.findAll();
+        this.cardUseCase.findAll().forEach(card -> this.cardUseCase.findByDeckOfCardsRank(card.getDeckOfCardsRank()));
     }
 }
