@@ -1,9 +1,6 @@
 package com.klab.cards.challenge.presentation.exception.handler;
 
-import com.klab.cards.challenge.presentation.exception.base.BadRequestException;
-import com.klab.cards.challenge.presentation.exception.base.ConflictException;
-import com.klab.cards.challenge.presentation.exception.base.NotFoundException;
-import com.klab.cards.challenge.presentation.exception.base.UnauthorizedException;
+import com.klab.cards.challenge.presentation.exception.base.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,16 +21,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request,
             HttpServletRequest httpServletRequest
     ) {
-        ApiExceptionResponse apiExceptionResponse = ApiExceptionResponse.builder()
-                .errorMessage(e.getMessage())
-                .timestamp(e.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-                .instance(httpServletRequest.getRequestURI())
-                .details(e.getDetails())
-                .build();
-
         return handleExceptionInternal(
                 e,
-                apiExceptionResponse,
+                buildApiExceptionResponse(e, httpServletRequest),
                 new HttpHeaders(),
                 HttpStatus.CONFLICT,
                 request
@@ -46,16 +36,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request,
             HttpServletRequest httpServletRequest
     ) {
-        ApiExceptionResponse apiExceptionResponse = ApiExceptionResponse.builder()
-                .errorMessage(e.getMessage())
-                .timestamp(e.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-                .instance(httpServletRequest.getRequestURI())
-                .details(e.getDetails())
-                .build();
-
         return handleExceptionInternal(
                 e,
-                apiExceptionResponse,
+                buildApiExceptionResponse(e, httpServletRequest),
                 new HttpHeaders(),
                 HttpStatus.BAD_REQUEST,
                 request
@@ -68,16 +51,9 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request,
             HttpServletRequest httpServletRequest
     ) {
-        ApiExceptionResponse apiExceptionResponse = ApiExceptionResponse.builder()
-                .errorMessage(e.getMessage())
-                .timestamp(e.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
-                .instance(httpServletRequest.getRequestURI())
-                .details(e.getDetails())
-                .build();
-
         return handleExceptionInternal(
                 e,
-                apiExceptionResponse,
+                buildApiExceptionResponse(e, httpServletRequest),
                 new HttpHeaders(),
                 HttpStatus.UNAUTHORIZED,
                 request
@@ -90,19 +66,36 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
             WebRequest request,
             HttpServletRequest httpServletRequest
     ) {
-        ApiExceptionResponse apiExceptionResponse = ApiExceptionResponse.builder()
+        return handleExceptionInternal(
+                e,
+                buildApiExceptionResponse(e, httpServletRequest),
+                new HttpHeaders(),
+                HttpStatus.NOT_FOUND,
+                request
+        );
+    }
+
+    @ExceptionHandler({ServiceUnavailableException.class})
+    protected ResponseEntity<Object> handleServiceUnavailableException(
+            ServiceUnavailableException e,
+            WebRequest request,
+            HttpServletRequest httpServletRequest
+    ) {
+        return handleExceptionInternal(
+                e,
+                buildApiExceptionResponse(e, httpServletRequest),
+                new HttpHeaders(),
+                HttpStatus.SERVICE_UNAVAILABLE,
+                request
+        );
+    }
+
+    private ApiExceptionResponse buildApiExceptionResponse(BaseException e, HttpServletRequest httpServletRequest) {
+        return ApiExceptionResponse.builder()
                 .errorMessage(e.getMessage())
                 .timestamp(e.getTimestamp().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
                 .instance(httpServletRequest.getRequestURI())
                 .details(e.getDetails())
                 .build();
-
-        return handleExceptionInternal(
-                e,
-                apiExceptionResponse,
-                new HttpHeaders(),
-                HttpStatus.NOT_FOUND,
-                request
-        );
     }
 }

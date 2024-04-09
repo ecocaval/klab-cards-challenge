@@ -5,6 +5,7 @@ import com.klab.cards.challenge.presentation.entity.Card;
 import com.klab.cards.challenge.presentation.entity.Game;
 import com.klab.cards.challenge.presentation.entity.Hand;
 import com.klab.cards.challenge.presentation.entity.Player;
+import com.klab.cards.challenge.presentation.exception.DeckOfCardsApiCommunicationException;
 import com.klab.cards.challenge.presentation.exception.GameNotFoundException;
 import com.klab.cards.challenge.presentation.repository.GameRepository;
 import com.klab.cards.challenge.presentation.usecase.CardUseCase;
@@ -102,8 +103,7 @@ public class GameUseCaseImpl implements GameUseCase {
             return deckId;
 
         } catch (FeignException exception) {
-            //FIXME
-            throw new RuntimeException();
+            throw new DeckOfCardsApiCommunicationException();
         }
     }
 
@@ -131,8 +131,7 @@ public class GameUseCaseImpl implements GameUseCase {
                     playerHand.incrementScore(card.getValue());
 
                 } catch (InterruptedException | ExecutionException e) {
-                    //FIXME
-                    throw new RuntimeException(e);
+                    throw new DeckOfCardsApiCommunicationException();
                 }
             });
 
@@ -150,8 +149,7 @@ public class GameUseCaseImpl implements GameUseCase {
                                 this.deckOfCardsApiClient.drawACardFromTheDeck(deckId).getDeckOfCardsRank()
                         );
                     } catch (FeignException exception) {
-                        //FIXME
-                        throw new RuntimeException();
+                        throw new DeckOfCardsApiCommunicationException();
                     }
                 })).toList();
     }

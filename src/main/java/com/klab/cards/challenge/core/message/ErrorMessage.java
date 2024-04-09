@@ -13,6 +13,7 @@ public enum ErrorMessage {
     ERROR_INVALID_PLAYER_ID("O identificador do jogador informado é inválido."),
     ERROR_GAME_NOT_FOUND_BY_ID("O jogo com este identificador nao foi encontrado."),
     ERROR_PLAYER_NOT_FOUND_BY_ID("O jogador com este identificador nao foi encontrado."),
+    ERROR_DECK_OF_CARDS_API_COMMUNICATION_ERROR("Não foi possível utilizar a api resposnsável pelas cartas, aguarde um instante e tente novamente."),
     ERROR_CARD_NOT_FOUND_BY_DECK_OF_CARD_RANK("Nenhuma carta com este rank foi encontrada.")
     ;
 
