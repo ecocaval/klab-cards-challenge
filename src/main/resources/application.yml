@@ -32,6 +32,10 @@ ehcache:
     cacheName: "playerCache"
     heapEntries: 8
     timeToLiveInSeconds: 0 # "forever"
+  cardsCache:
+    cacheName: "cardsCache"
+    heapEntries: 1
+    timeToLiveInSeconds: 0 # "forever"
   cardCache:
     cacheName: "cardCache"
     heapEntries: 26

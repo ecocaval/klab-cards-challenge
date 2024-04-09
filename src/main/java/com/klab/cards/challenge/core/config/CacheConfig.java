@@ -1,10 +1,12 @@
 package com.klab.cards.challenge.core.config;
 
 import com.klab.cards.challenge.core.config.properties.CardCacheProperties;
+import com.klab.cards.challenge.core.config.properties.CardsCacheProperties;
 import com.klab.cards.challenge.core.config.properties.PlayerCacheProperties;
 import com.klab.cards.challenge.core.config.properties.PlayersCacheProperties;
 import com.klab.cards.challenge.core.config.properties.base.CacheBaseProperties;
 import com.klab.cards.challenge.core.config.resolver.CardCacheResolver;
+import com.klab.cards.challenge.core.config.resolver.CardsCacheResolver;
 import com.klab.cards.challenge.core.config.resolver.PlayerCacheResolver;
 import com.klab.cards.challenge.core.config.resolver.PlayersCacheResolver;
 import com.klab.cards.challenge.presentation.entity.Card;
@@ -32,6 +34,8 @@ import static org.ehcache.jsr107.Eh107Configuration.fromEhcacheCacheConfiguratio
 @EnableCaching
 public class CacheConfig {
 
+    final private CardsCacheProperties cardsCacheProperties;
+
     final private CardCacheProperties cardCacheProperties;
 
     final private PlayersCacheProperties playersCacheProperties;
@@ -39,7 +43,13 @@ public class CacheConfig {
     final private PlayerCacheProperties playerCacheProperties;
 
     @Autowired
-    public CacheConfig(CardCacheProperties cardCacheProperties, PlayersCacheProperties playersCacheProperties, PlayerCacheProperties playerCacheProperties) {
+    public CacheConfig(
+            CardsCacheProperties cardsCacheProperties,
+            CardCacheProperties cardCacheProperties,
+            PlayersCacheProperties playersCacheProperties,
+            PlayerCacheProperties playerCacheProperties
+    ) {
+        this.cardsCacheProperties = cardsCacheProperties;
         this.cardCacheProperties = cardCacheProperties;
         this.playersCacheProperties = playersCacheProperties;
         this.playerCacheProperties = playerCacheProperties;
@@ -51,6 +61,7 @@ public class CacheConfig {
 
         this.addPlayersCache(cacheManager);
         this.addPlayerCache(cacheManager);
+        this.addCardsCache(cacheManager);
         this.addCardCache(cacheManager);
 
         return new JCacheCacheManager(cacheManager);
@@ -87,6 +98,15 @@ public class CacheConfig {
     @Bean("playerCacheResolver")
     public CacheResolver playerCacheResolver() {
         return new PlayerCacheResolver(cacheManager(), playerCacheProperties.getCacheName());
+    }
+
+    private void addCardsCache(javax.cache.CacheManager cacheManager) {
+        this.addCache(cacheManager, cardsCacheProperties, SimpleKey.class, List.class);
+    }
+
+    @Bean("cardsCacheResolver")
+    public CacheResolver cardsCacheResolver() {
+        return new CardsCacheResolver(cacheManager(), cardsCacheProperties.getCacheName());
     }
 
     private void addCardCache(javax.cache.CacheManager cacheManager) {
