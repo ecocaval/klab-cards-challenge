@@ -6,7 +6,6 @@ import com.klab.cards.challenge.presentation.exception.PlayersNotFoundException;
 import com.klab.cards.challenge.presentation.repository.PlayerRepository;
 import com.klab.cards.challenge.presentation.usecase.PlayerUseCase;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 

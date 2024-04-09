@@ -56,7 +56,6 @@ public class CacheConfig {
         return new JCacheCacheManager(cacheManager);
     }
 
-
     private <K, V> void addCache(
             javax.cache.CacheManager cacheManager,
             CacheBaseProperties cacheProperties,
