@@ -14,7 +14,7 @@ CREATE TABLE card (
    deleted BOOLEAN DEFAULT FALSE NOT NULL,
    rank VARCHAR(2) NOT NULL,
    deck_of_cards_rank VARCHAR(10) NOT NULL,
-   value INTEGER NOT NULL,
+   rank_value INTEGER NOT NULL,
    CONSTRAINT pk_card PRIMARY KEY (id)
 );
 

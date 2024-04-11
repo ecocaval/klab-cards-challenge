@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.List;
 
@@ -14,6 +16,8 @@ import java.util.List;
 @SuperBuilder
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE player SET deleted = true WHERE id = ?")
+@SQLRestriction("deleted = false")
 public class Player extends BaseEntity {
 
     @Column(nullable = false, unique = true)

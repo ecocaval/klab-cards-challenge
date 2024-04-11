@@ -128,7 +128,7 @@ public class GameUseCaseImpl implements GameUseCase {
 
                     playerHand.getCards().add(card);
 
-                    playerHand.incrementScore(card.getValue());
+                    playerHand.incrementScore(card.getRankValue());
 
                 } catch (InterruptedException | ExecutionException e) {
                     throw new DeckOfCardsApiCommunicationException();

@@ -30,6 +30,5 @@ public class HandUseCaseImpl implements HandUseCase {
                 .filter(hand -> hand.getScore() >= highestScore)
                 .map(Hand::getPlayer)
                 .collect(Collectors.toSet());
-
     }
 }

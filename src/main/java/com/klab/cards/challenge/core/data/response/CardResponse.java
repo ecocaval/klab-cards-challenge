@@ -14,12 +14,12 @@ public class CardResponse {
 
     private String rank;
 
-    private int value;
+    private int rankValue;
 
     public static CardResponse fromCard(Card card) {
         return CardResponse.builder()
                 .rank(card.getRank())
-                .value(card.getValue())
+                .rankValue(card.getRankValue())
                 .build();
     }
 }
