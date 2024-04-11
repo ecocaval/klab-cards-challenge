@@ -27,26 +27,26 @@ class CardUseCaseImplTest {
     @Mock
     private CardRepository cardRepositoryMock;
 
-    private final List<Card> staticCardList = CardCreator.createCardsListWithId();
+    private final List<Card> staticCardsList = CardCreator.createCardsListWithId();
 
     @BeforeEach
     void setup() {
         BDDMockito.when(cardRepositoryMock.findAll())
-                .thenReturn(staticCardList);
+                .thenReturn(staticCardsList);
     }
 
     @Test
-    @DisplayName("Find All returns a list of cards when successful")
+    @DisplayName("Find all returns a list of cards when successful")
     void findAll_ReturnAListOfCards_WhenSuccessful() {
 
         var cards = this.cardUseCase.findAll();
 
         Assertions.assertThat(cards).isNotEmpty();
-        Assertions.assertThat(cards).isEqualTo(staticCardList);
+        Assertions.assertThat(cards).isEqualTo(staticCardsList);
     }
 
     @Test
-    @DisplayName("Find All throws CardsNotFoundException when no cards are found in database")
+    @DisplayName("Find all throws CardsNotFoundException when no cards are found in database")
     void findAll_ThrowsCardsNotFoundException_WhenNoCardsAreFoundInDataBase() {
 
         BDDMockito.when(cardRepositoryMock.findAll())
@@ -57,20 +57,20 @@ class CardUseCaseImplTest {
     }
 
     @Test
-    @DisplayName("Find By Deck Of Cards Ranks returns a card when sucessful")
+    @DisplayName("Find by deck of cards rank returns a card when successful")
     void findByDeckOfCardsRank_ReturnsCard_WhenSuccessful() {
 
-        var card = this.cardUseCase.findByDeckOfCardsRank(staticCardList.get(0).getDeckOfCardsRank());
+        var card = this.cardUseCase.findByDeckOfCardsRank(staticCardsList.get(0).getDeckOfCardsRank());
 
         Assertions.assertThat(card).isNotNull();
-        Assertions.assertThat(card.getId()).isEqualTo(staticCardList.get(0).getId());
-        Assertions.assertThat(card.getRank()).isEqualTo(staticCardList.get(0).getRank());
-        Assertions.assertThat(card.getRankValue()).isEqualTo(staticCardList.get(0).getRankValue());
-        Assertions.assertThat(card.getDeckOfCardsRank()).isEqualTo(staticCardList.get(0).getDeckOfCardsRank());
+        Assertions.assertThat(card.getId()).isEqualTo(staticCardsList.get(0).getId());
+        Assertions.assertThat(card.getRank()).isEqualTo(staticCardsList.get(0).getRank());
+        Assertions.assertThat(card.getRankValue()).isEqualTo(staticCardsList.get(0).getRankValue());
+        Assertions.assertThat(card.getDeckOfCardsRank()).isEqualTo(staticCardsList.get(0).getDeckOfCardsRank());
     }
 
     @Test
-    @DisplayName("Find By Deck Of Cards Ranks throws CardNotFoundException when no card is found")
+    @DisplayName("Find by deck of cards rank throws CardNotFoundException when no card is found")
     void findByDeckOfCardsRank_ThrowsCardNotFoundException_WhenCardIsNotFoundByDeckOfCardsRank() {
 
         Assertions.assertThatExceptionOfType(CardNotFoundException.class)

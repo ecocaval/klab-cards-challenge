@@ -27,7 +27,7 @@ class CardRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save Persists Card When Successful")
+    @DisplayName("Save persists card when successful")
     void save_PersistCard_WhenSuccessful() {
 
         var card = CardCreator.createCard();
@@ -44,7 +44,7 @@ class CardRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save Updates Card When Successful")
+    @DisplayName("Save updates card when successful")
     void save_UpdateCard_WhenSuccessful() {
 
         var cardSaved = this.cardRepository.save(CardCreator.createCard());
@@ -67,7 +67,7 @@ class CardRepositoryTest {
     }
 
     @Test
-    @DisplayName("Delete Removes Card When Successful")
+    @DisplayName("Delete removes card when successful")
     void delete_RemovesCard_WhenSuccessful() {
 
         var cardSaved = this.cardRepository.save(CardCreator.createCard());
@@ -78,7 +78,7 @@ class CardRepositoryTest {
     }
 
     @Test
-    @DisplayName("Get Finds Card By Deck of Card Rank When Successful")
+    @DisplayName("Get finds card by deck of card rank when successful")
     void get_FindCardByDeckOfCardsRank_WhenSuccessful() {
 
         var cardSaved = this.cardRepository.save(CardCreator.createCard());

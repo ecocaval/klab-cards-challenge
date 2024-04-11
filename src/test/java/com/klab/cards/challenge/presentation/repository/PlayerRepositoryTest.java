@@ -23,7 +23,7 @@ class PlayerRepositoryTest {
     private final Faker faker = new Faker();
 
     @Test
-    @DisplayName("Save Persists Player When Successful")
+    @DisplayName("Save persists player when successful")
     void save_PersistPlayer_WhenSuccessful() {
 
         var player = PlayerCreator.createPlayer();
@@ -38,7 +38,7 @@ class PlayerRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save Updates Player When Successful")
+    @DisplayName("Save updates player when successful")
     void save_UpdatePlayer_WhenSuccessful() {
 
         var playerSaved = this.playerRepository.save(PlayerCreator.createPlayer());
@@ -57,7 +57,7 @@ class PlayerRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save Deletes Player When Successful")
+    @DisplayName("Save deletes player when successful")
     void delete_RemovesPlayer_WhenSuccessful() {
 
         var playerSaved = this.playerRepository.save(PlayerCreator.createPlayer());

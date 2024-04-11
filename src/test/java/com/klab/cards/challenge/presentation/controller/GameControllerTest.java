@@ -45,7 +45,7 @@ class GameControllerTest {
     }
 
     @Test
-    @DisplayName("Find all pageable returns A page of games")
+    @DisplayName("Find all pageable returns a page of games")
     void findAllPageable_ReturnsAPageOfGames_WhenSuccessful() {
 
         Page<GameResponse> games = gameController.findAllPageable(Pageable.unpaged()).getBody();

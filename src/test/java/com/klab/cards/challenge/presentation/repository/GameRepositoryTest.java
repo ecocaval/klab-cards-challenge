@@ -28,7 +28,7 @@ class GameRepositoryTest {
     private final Random random = new Random();
 
     @Test
-    @DisplayName("Save Persists Game When Successful")
+    @DisplayName("Save persists game when successful")
     void save_PersistGame_WhenSuccessful() {
 
         var game = GameCreator.createGame();
@@ -46,7 +46,7 @@ class GameRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save Updates Games When Successful")
+    @DisplayName("Save updates games when successful")
     void save_UpdateGame_WhenSuccessful() {
 
         var gameSaved = this.gameRepository.save(GameCreator.createGame());
@@ -82,7 +82,7 @@ class GameRepositoryTest {
     }
 
     @Test
-    @DisplayName("Save Deletes Game When Successful")
+    @DisplayName("Save deletes game when successful")
     void delete_RemovesGame_WhenSuccessful() {
 
         var gameSaved = this.gameRepository.save(GameCreator.createGame());

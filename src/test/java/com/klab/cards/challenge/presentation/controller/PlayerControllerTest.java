@@ -84,7 +84,7 @@ class PlayerControllerTest {
     }
 
     @Test
-    @DisplayName("Find All Returns A List Of Players When Successful")
+    @DisplayName("Find all returns a list of players when successful")
     void findAll_ReturnAListOfPlayers_WhenSuccessful() {
 
         Set<PlayerResponse> players = playerController.findAll().getBody();
