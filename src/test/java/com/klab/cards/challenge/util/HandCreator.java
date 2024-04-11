@@ -13,7 +13,7 @@ public class HandCreator {
 
         var randomOffset = random.nextInt(9);
 
-        var randomCardsHand = CardCreator.createCardList().subList(
+        var randomCardsHand = CardCreator.createCardsList().subList(
                 randomOffset,
                 Game.NUMBER_OF_CARDS_PER_PLAYER + randomOffset
         );

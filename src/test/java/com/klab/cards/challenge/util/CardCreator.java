@@ -6,6 +6,7 @@ import com.klab.cards.challenge.presentation.entity.Game;
 
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 public class CardCreator {
@@ -25,9 +26,27 @@ public class CardCreator {
                 .build();
     }
 
-    public static List<Card> createCardList() {
+    public static List<Card> createCardsList() {
         return IntStream.range(0, Game.NUMBER_OF_CARDS)
                 .mapToObj(i -> createCard())
+                .toList();
+    }
+
+    public static Card createCardWithId() {
+
+        var randomRank = faker.numerify("##");
+
+        return Card.builder()
+                .id(UUID.randomUUID())
+                .rank(randomRank)
+                .deckOfCardsRank(randomRank)
+                .rankValue(random.nextInt(Game.NUMBER_OF_CARDS))
+                .build();
+    }
+
+    public static List<Card> createCardsListWithId() {
+        return IntStream.range(0, Game.NUMBER_OF_CARDS)
+                .mapToObj(i -> createCardWithId())
                 .toList();
     }
 }
