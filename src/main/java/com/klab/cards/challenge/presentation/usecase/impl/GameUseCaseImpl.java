@@ -142,7 +142,7 @@ public class GameUseCaseImpl implements GameUseCase {
 
     private List<CompletableFuture<Card>> drawCardsForPlayer(String deckId) {
 
-        return IntStream.range(0, Game.MAXIMUM_NUMBER_OF_CARDS_PER_PLAYER)
+        return IntStream.range(0, Game.NUMBER_OF_CARDS_PER_PLAYER)
                 .mapToObj(i -> CompletableFuture.supplyAsync(() -> {
                     try {
                         return this.cardUseCase.findByDeckOfCardsRank(

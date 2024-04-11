@@ -3,6 +3,7 @@ package com.klab.cards.challenge.presentation.repository;
 import com.github.javafaker.Faker;
 import com.klab.cards.challenge.presentation.entity.Card;
 import com.klab.cards.challenge.presentation.entity.Player;
+import com.klab.cards.challenge.util.PlayerCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -25,7 +26,7 @@ class PlayerRepositoryTest {
     @DisplayName("Save Persists Player When Successful")
     void save_PersistPlayer_WhenSuccessful() {
 
-        var player = this.createPlayer();
+        var player = PlayerCreator.createPlayer();
 
         var playerSaved = this.playerRepository.save(player);
 
@@ -40,7 +41,7 @@ class PlayerRepositoryTest {
     @DisplayName("Save Updates Player When Successful")
     void save_UpdatePlayer_WhenSuccessful() {
 
-        var playerSaved = this.playerRepository.save(createPlayer());
+        var playerSaved = this.playerRepository.save(PlayerCreator.createPlayer());
 
         playerSaved.setName(faker.name().name());
         playerSaved.setLastModifiedDate(LocalDateTime.now());
@@ -59,17 +60,11 @@ class PlayerRepositoryTest {
     @DisplayName("Save Deletes Player When Successful")
     void delete_RemovesPlayer_WhenSuccessful() {
 
-        var playerSaved = this.playerRepository.save(createPlayer());
+        var playerSaved = this.playerRepository.save(PlayerCreator.createPlayer());
 
         this.playerRepository.delete(playerSaved);
 
         Assertions.assertThat(this.playerRepository.findById(playerSaved.getId())).isEmpty();
-    }
-
-    private Player createPlayer() {
-        return Player.builder()
-                .name(faker.name().name())
-                .build();
     }
 
 }

@@ -2,6 +2,7 @@ package com.klab.cards.challenge.presentation.repository;
 
 import com.github.javafaker.Faker;
 import com.klab.cards.challenge.presentation.entity.Card;
+import com.klab.cards.challenge.util.CardCreator;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,7 +30,7 @@ class CardRepositoryTest {
     @DisplayName("Save Persists Card When Successful")
     void save_PersistCard_WhenSuccessful() {
 
-        var card = this.createCard();
+        var card = CardCreator.createCard();
 
         var cardSaved = this.cardRepository.save(card);
 
@@ -46,7 +47,7 @@ class CardRepositoryTest {
     @DisplayName("Save Updates Card When Successful")
     void save_UpdateCard_WhenSuccessful() {
 
-        var cardSaved = this.cardRepository.save(createCard());
+        var cardSaved = this.cardRepository.save(CardCreator.createCard());
 
         cardSaved.setRank("2");
         cardSaved.setDeckOfCardsRank("2");
@@ -69,7 +70,7 @@ class CardRepositoryTest {
     @DisplayName("Delete Removes Card When Successful")
     void delete_RemovesCard_WhenSuccessful() {
 
-        var cardSaved = this.cardRepository.save(createCard());
+        var cardSaved = this.cardRepository.save(CardCreator.createCard());
 
         this.cardRepository.delete(cardSaved);
 
@@ -80,19 +81,11 @@ class CardRepositoryTest {
     @DisplayName("Get Finds Card By Deck of Card Rank When Successful")
     void get_FindCardByDeckOfCardsRank_WhenSuccessful() {
 
-        var cardSaved = this.cardRepository.save(createCard());
+        var cardSaved = this.cardRepository.save(CardCreator.createCard());
 
         Assertions.assertThat(this.cardRepository.findByDeckOfCardsRank(cardSaved.getDeckOfCardsRank())).isNotEmpty();
 
         Assertions.assertThat(this.cardRepository.findByDeckOfCardsRank(faker.name().name())).isEmpty();
-    }
-
-    private Card createCard() {
-        return Card.builder()
-                .rank("57")
-                .deckOfCardsRank("57")
-                .rankValue(100)
-                .build();
     }
 
 }
