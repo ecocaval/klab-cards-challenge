@@ -6,6 +6,8 @@ Para começar a API basta ter o docker instalado em sua máquina e rodar o segui
 
 O docker será responsável por subir o banco de dados PostgreSQL localmente, permitindo com que o backend se conecte ao banco.
 
+OBS: Por padrão são criados 4 jogadores default para o jogo. Assim como 13 cartas default a se usar como referência no banco.
+
 # Tecnologias Utilizadas
 
 - Java 17
