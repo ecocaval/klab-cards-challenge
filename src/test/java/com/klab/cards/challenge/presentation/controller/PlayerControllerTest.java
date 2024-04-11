@@ -51,30 +51,8 @@ class PlayerControllerTest {
     @BeforeEach
     void setup() {
 
-        List<Game> gameList = IntStream.range(0, random.nextInt(10))
-                .mapToObj(i -> GameCreator.createGame()).toList();
-
-        gameList.forEach(game -> {
-                    game.setWinners(new HashSet<>(List.of(staticPlayer)));
-
-                    int highestScore = game.getHands().stream()
-                            .max(Comparator.comparingInt(Hand::getScore))
-                            .map(Hand::getScore)
-                            .orElseThrow();
-
-                    for (Hand hand : game.getHands()) {
-                        if (hand.getScore() >= highestScore) {
-                            hand.setPlayer(staticPlayer);
-                            break;
-                        }
-                    }
-                }
-        );
-
-        Page<Game> gamePage = new PageImpl<>(gameList, PageRequest.of(0, 10), gameList.size());
-
         BDDMockito.when(gameUseCaseMock.findAllGamesWonByPlayerPageable(ArgumentMatchers.any(), ArgumentMatchers.any()))
-                .thenReturn(gamePage);
+                .thenReturn(GameCreator.createPageOfGamesWonByPlayer(staticPlayer));
 
         BDDMockito.when(playerUseCaseMock.findById(ArgumentMatchers.any()))
                 .thenReturn(staticPlayer);

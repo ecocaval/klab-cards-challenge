@@ -2,6 +2,7 @@ package com.klab.cards.challenge.util;
 
 import com.klab.cards.challenge.presentation.entity.Game;
 import com.klab.cards.challenge.presentation.entity.Hand;
+import com.klab.cards.challenge.presentation.entity.Player;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -54,6 +55,30 @@ public class GameCreator {
 
         List<Game> gameList = IntStream.range(0, random.nextInt(10))
                 .mapToObj(i -> GameCreator.createGame()).toList();
+
+        return new PageImpl<>(gameList, PageRequest.of(0, 10), gameList.size());
+    }
+
+    public static Page<Game> createPageOfGamesWonByPlayer(Player player) {
+        List<Game> gameList = IntStream.range(0, random.nextInt(10))
+                .mapToObj(i -> GameCreator.createGame()).toList();
+
+        gameList.forEach(game -> {
+                    game.setWinners(new HashSet<>(List.of(player)));
+
+                    int highestScore = game.getHands().stream()
+                            .max(Comparator.comparingInt(Hand::getScore))
+                            .map(Hand::getScore)
+                            .orElseThrow();
+
+                    for (Hand hand : game.getHands()) {
+                        if (hand.getScore() >= highestScore) {
+                            hand.setPlayer(player);
+                            break;
+                        }
+                    }
+                }
+        );
 
         return new PageImpl<>(gameList, PageRequest.of(0, 10), gameList.size());
     }
