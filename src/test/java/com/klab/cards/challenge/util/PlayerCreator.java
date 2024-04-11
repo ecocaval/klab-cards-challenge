@@ -5,6 +5,7 @@ import com.klab.cards.challenge.presentation.entity.Game;
 import com.klab.cards.challenge.presentation.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 public class PlayerCreator {
@@ -16,10 +17,22 @@ public class PlayerCreator {
                 .name(faker.name().name())
                 .build();
     }
+    public static Player createPlayerWithId() {
+        return Player.builder()
+                .id(UUID.randomUUID())
+                .name(faker.name().name())
+                .build();
+    }
 
     public static List<Player> createPlayerList() {
         return IntStream.range(0, Game.NUMBER_OF_PLAYERS)
                 .mapToObj(i -> createPlayer())
+                .toList();
+    }
+
+    public static List<Player> createPlayerListWithId() {
+        return IntStream.range(0, Game.NUMBER_OF_PLAYERS)
+                .mapToObj(i -> createPlayerWithId())
                 .toList();
     }
 }

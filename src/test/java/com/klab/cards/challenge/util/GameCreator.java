@@ -2,17 +2,23 @@ package com.klab.cards.challenge.util;
 
 import com.klab.cards.challenge.presentation.entity.Game;
 import com.klab.cards.challenge.presentation.entity.Hand;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class GameCreator {
+
+    private static final Random random = new Random();
 
     public static Game createGame() {
 
         Game game = new Game();
+
+        game.setId(UUID.randomUUID());
 
         game.setPlayers(new HashSet<>(PlayerCreator.createPlayerList()));
 
@@ -42,5 +48,13 @@ public class GameCreator {
         );
 
         return game;
+    }
+
+    public static Page<Game> createGamePage() {
+
+        List<Game> gameList = IntStream.range(0, random.nextInt(10))
+                .mapToObj(i -> GameCreator.createGame()).toList();
+
+        return new PageImpl<>(gameList, PageRequest.of(0, 10), gameList.size());
     }
 }

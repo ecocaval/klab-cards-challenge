@@ -13,7 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import java.util.*;
 
 @DataJpaTest
-@DisplayName("Tests for Player Repository")
+@DisplayName("Tests for Game Repository")
 class GameRepositoryTest {
 
     @Autowired
